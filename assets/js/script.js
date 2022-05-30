@@ -1,13 +1,13 @@
 let startButtonEl = document.querySelector("#start");
 let quizEl = document.querySelector("#content");
 
-const quizQues = {
-    one: "Which of the following is the proper way to declare an object?",
-    two: "What is the proper way to make a comment in JavaScript?",
-    three: "",
-    four: "",
-    five: ""
-};
+const quizQues = [
+    {
+    question: "Which is a string?",
+    answers: {
+        a: ""
+    }
+};]
 
 function timeLimit() {
     let timeLeft = 60;
@@ -28,14 +28,7 @@ function timeLimit() {
 // document.body.onload = startQuizOne;
 
 function startQuizOne(event) {
-    const quesAns = {
-        one: "x",
-        two: "y",
-        three: "a",
-        four: "b",
-        Element: "li"
-    };
-    
+   
 
     let quesBoxOne = document.createElement("div");
     quesBoxOne.className = "quiz-section";
