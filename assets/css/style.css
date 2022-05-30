@@ -43,5 +43,12 @@ body {
     font-weight: bolder;
     letter-spacing: 4px;
     border-radius: 10px;
+}
+
+.quiz-section button:hover {
     box-shadow: 0 0 12px 3px aliceblue;
+}
+
+#scores:hover {
+    color: aliceblue;
 }
