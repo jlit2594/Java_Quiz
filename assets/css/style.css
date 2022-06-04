@@ -1,11 +1,12 @@
 :root {
-    --primary-color: #ae43c3;
-    --secondary-color: #801994;
+    --primary-color: #3a3a3a;
+    --secondary-color: #242424;
+    --tertiary-color: #b30707;
 }
 
 body {
     background-color: var(--primary-color);
-    font-family: century gothic, century gothic, sans sans-serif;
+    font-family: 'Kdam Thmor Pro', sans-serif;
 }
 
 .flex-container {
@@ -24,7 +25,7 @@ body {
     box-shadow: 0 0 5px black;
     width: 900px;
     height: 400px;
-    margin:0 auto 500px auto;
+    margin:0 auto 20px auto;
 }
 
 .quiz-section h1 {
@@ -39,7 +40,7 @@ body {
 
 .quiz-section button {
     color: aliceblue;
-    background-color: var(--secondary-color);
+    background-color: var(--tertiary-color);
     border: solid black;
     margin-bottom: 10px;
     padding: 15px 40px;
@@ -53,10 +54,11 @@ body {
     box-shadow: 0 0 12px 3px aliceblue;
 }
 
-.quiz-section ul li {
+.quiz-answers {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    padding: 0;
 }
 
 #scores:hover {
