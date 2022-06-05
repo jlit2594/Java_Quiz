@@ -1,5 +1,7 @@
 let startButtonEl = document.querySelector("#start");
 let quizEl = document.querySelector("#content");
+let result = [];
+let resultScore = 0;
 
 
 function timeLimit() {
@@ -20,7 +22,14 @@ function timeLimit() {
 
 // document.body.onload = startQuizOne;
 function loadResult () {
+    let resultBox = document.createElement("div")
+    resultBox.className = "quiz-section"
 
+    let title = document.createElement("h1")
+    title.textContent = "Your Results"
+
+    let resultValue =  resultScore
+    console.log(resultValue);
 };
 
 function questionFive () {
@@ -65,14 +74,17 @@ function questionFive () {
 
     
     function evaluate() {
-        if (ans4El.clicked) {
+        if (ans4El) {
+            result5 = true;
             loadResult();
-            return true; 
+             
     }
     else {
+        result5 = false;
         loadResult();
-        return false;
-    }};
+        
+    } console.log(result5)
+    };
 };
 
 function questionFour() {
@@ -117,14 +129,17 @@ function questionFour() {
 
     
     function evaluate() {
-        if (ans2El.clicked) {
+        if (ans2El) {
+            result4 = true;
             questionFive();
-            return true; 
+             
     }
     else {
+        result4 = false;
         questionFive();
-        return false;
-    }};
+        
+    } console.log(result4)
+    };
 };
 
 function questionThree() {
@@ -169,14 +184,17 @@ function questionThree() {
 
     
     function evaluate() {
-        if (ans3El.clicked) {
+        if (ans3El) {
+            result3 = true;
             questionFour();
-            return true; 
+             
     }
     else {
+        result3 = false;
         questionFour();
-        return false;
-    }};
+        
+    } console.log(result3)
+};
 };
 
 function questionTwo() {
@@ -221,14 +239,17 @@ function questionTwo() {
 
     
     function evaluate() {
-        if (ans4El.clicked) {
-            questionThree();
-            return true; 
+        if (ans4El) {
+            result2 = true; 
+            questionThree()
     }
     else {
-        questionThree();
-        return false;
-    }};
+        result2 = false;
+        questionThree()
+    }
+    console.log(result2)
+    };
+    
 
     // correct = true;
     // incorrect = false;
@@ -269,24 +290,13 @@ function questionOne() {
     let ans3El = document.querySelector("#answer-three")
     let ans4El = document.querySelector("#answer-four")
     
-    ans1El.addEventListener("click", evaluate);
-    ans2El.addEventListener("click", evaluate);
-    ans3El.addEventListener("click", evaluate);
-    ans4El.addEventListener("click", evaluate);
+    ans1El.addEventListener("click", evaluate, {result === true});
+    ans2El.addEventListener("click", evaluate, {result === false});
+    ans3El.addEventListener("click", evaluate, {result === false});
+    ans4El.addEventListener("click", evaluate, {result === false});
 
     
-    function evaluate() {
-        if (ans1El.clicked) {
-            questionTwo();
-            return true;
-            
-        }
-        else {
-            questionTwo();
-            return false;
-            
-        }
-    };
+    
 
     // correct = true;
     // incorrect = false;
@@ -294,6 +304,15 @@ function questionOne() {
     // timeLimit();
 }
 
-
+function evaluate() {
+        if (result === true) {
+            resultScore = resultScore + 20;
+            questionTwo();
+        }
+        else {
+            questionTwo(); 
+        }
+        console.log(resultScore)
+};
 
 startButtonEl.addEventListener("click", questionOne);
