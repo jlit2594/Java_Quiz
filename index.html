@@ -21,7 +21,52 @@
             <p>This test consists of 5 questions. You will have 60 seconds to answer each question. Each correct answer is worth 10 points. You must have at least 30 points to pass. Press the START button to begin. Good luck! </p>
             <button id="start">START</button>
         </div>
+        <div class="quiz-section" id="dialog">
+            <h1>You're Done!</h1>
+            <p>Your score is<span id="score"></span></p>
+            <p>Type your name below and click the save button to record your score!</p>
+            <input id="name" type="text">
+            <button id="save">SAVE</button>
+        </div>
+        <div class="quiz-section" id="high-scores" title="HIGH SCORES">
+            <h1>The Leaderboard</h1>
+            <ol>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ol>
+        </div>
     </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+          $("#dialog").dialog({
+      autoOpen: false,
+      show: {
+          effect: "drop",
+          duration: 1000
+      }
+    });
+        $("#save").on('click', function() {
+          $("#dialog").dialog('close');
+    });
+    </script>
+    <script>
+        $("#high-scores").dialog({
+            autoOpen: false,
+            show: {
+                effect: "drop",
+                duration: 1000
+            }
+        });
+        $("#scores").on('click', function() {
+            $("#high-scores").dialog('open');
+        });
+    </script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>

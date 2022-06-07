@@ -9,6 +9,15 @@ body {
     font-family: 'Kdam Thmor Pro', sans-serif;
 }
 
+input {
+    background-color: grey;
+    border-radius: 5px;
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-size: 22px;
+    max-width: 250px;
+    text-align: center;
+}
+
 .flex-container {
     position: sticky:
 }
@@ -54,6 +63,51 @@ body {
     box-shadow: 0 0 12px 3px aliceblue;
 }
 
+.quiz-section-two {
+    background-color: var(--secondary-color);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    color:aliceblue;
+    border: solid 5px black;
+    border-radius: 20px;
+    box-shadow: 0 0 5px black;
+    width: 500px;
+    margin:0 auto 20px auto;
+}
+
+.quiz-section-two button {
+    color: aliceblue;
+    background-color: var(--tertiary-color);
+    border: solid black;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: bolder;
+    letter-spacing: 4px;
+    border-radius: 10px;
+}
+
+.quiz-section-two button:hover {
+    box-shadow: 0 0 12px 3px aliceblue;
+}
+
+.quiz-section-answered {
+    background-color: var(--secondary-color);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    color:aliceblue;
+    border: solid 5px black;
+    border-radius: 20px;
+    box-shadow: 0 0 5px black;
+    width: 900px;
+    height: 400px;
+    margin:0 auto 20px auto;
+    opacity: 10%;
+}
+
 .quiz-answers {
     display: flex;
     flex-direction: column;
@@ -61,6 +115,24 @@ body {
     padding: 0;
 }
 
-#scores:hover {
+#scores {
     color: aliceblue;
+}
+
+#scores:hover {
+    color: black;
+}
+
+.ui-dialog-titlebar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ui-dialog-titlebar button {
+    color: aliceblue;
+    background-color: var(--tertiary-color);
+    border: solid black;
+    font-size: 10px;
+    font-weight: bolder;
+    border-radius: 16px;
 }

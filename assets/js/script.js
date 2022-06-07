@@ -1,8 +1,7 @@
 let startButtonEl = document.querySelector("#start");
+let saveEl = document.querySelector("#save")
 let quizEl = document.querySelector("#content");
-let result = [];
 let resultScore = 0;
-
 
 function timeLimit() {
     let timeLeft = 60;
@@ -21,15 +20,33 @@ function timeLimit() {
 }
 
 // document.body.onload = startQuizOne;
+function saveResult () {
+    let userName = document.querySelector("#name")
+    let userInfo = {
+        name: userName,
+        score: resultScore
+    }
+
+    localStorage.setItem('User Info', JSON.stringify(userInfo))
+}
+
 function loadResult () {
-    let resultBox = document.createElement("div")
-    resultBox.className = "quiz-section"
+    let subBox = document.createElement("div")
+    subBox.className = "quiz-section-two"
 
-    let title = document.createElement("h1")
-    title.textContent = "Your Results"
+    let submitBtn = document.createElement("button")
+    submitBtn.textContent = "SUBMIT YOUR ANSWERS"
+    submitBtn.className = "sub-btn"
 
-    let resultValue =  resultScore
-    console.log(resultValue);
+    subBox.appendChild(submitBtn)
+    quizEl.appendChild(subBox)
+
+    let scoreResult = document.querySelector("#score")
+    scoreResult.textContent = (" " + resultScore + ". ")
+  
+    $(".sub-btn").on("click", function () {
+      $("#dialog").dialog("open");
+  });
 };
 
 function questionFive () {
@@ -42,18 +59,24 @@ function questionFive () {
     let ans1 = document.createElement("button")
     ans1.textContent = "click";
     ans1.id = "ans5-1";
+    ans1.value = "click";
 
     let ans2 = document.createElement("button")
     ans2.textContent = "hover";
     ans2.id = "ans5-2";
+    ans2.value = "hover"
 
     let ans3 = document.createElement("button")
     ans3.textContent = "check";
     ans3.id = "ans5-3";
+    ans3.value = "check"
 
     let ans4 = document.createElement("button")
     ans4.textContent = "view";
     ans4.id = "ans5-4";
+    ans4.value = "view"
+
+    let correctAns = "view";
 
     let answers = document.createElement("ol")
     answers.className = "quiz-answers"
@@ -74,17 +97,15 @@ function questionFive () {
 
     
     function evaluate() {
-        if (ans4El) {
-            result5 = true;
-            loadResult();
-             
+        if (this.value === correctAns) {
+            resultScore = resultScore + 20;
+            loadResult()
     }
     else {
-        result5 = false;
-        loadResult();
-        
-    } console.log(result5)
+        loadResult();   
     };
+    console.log(resultScore);
+};
 };
 
 function questionFour() {
@@ -97,18 +118,24 @@ function questionFour() {
     let ans1 = document.createElement("button")
     ans1.textContent = "setClass";
     ans1.id = "ans4-1";
+    ans1.value = "setClass";
 
     let ans2 = document.createElement("button")
     ans2.textContent = "className";
     ans2.id = "ans4-2";
+    ans2.value = "className"
 
     let ans3 = document.createElement("button")
     ans3.textContent = "getClass";
     ans3.id = "ans4-3";
+    ans3.value = "getClass";
 
     let ans4 = document.createElement("button")
     ans4.textContent = "addClass";
     ans4.id = "ans4-4";
+    ans4.value = "addClass"
+
+    let correctAns = "className"
 
     let answers = document.createElement("ol")
     answers.className = "quiz-answers"
@@ -129,17 +156,15 @@ function questionFour() {
 
     
     function evaluate() {
-        if (ans2El) {
-            result4 = true;
+        if (this.value === correctAns) {
+            resultScore = resultScore + 20;
             questionFive();
-             
     }
     else {
-        result4 = false;
         questionFive();
-        
-    } console.log(result4)
     };
+    console.log(resultScore);
+};
 };
 
 function questionThree() {
@@ -152,18 +177,24 @@ function questionThree() {
     let ans1 = document.createElement("button")
     ans1.textContent = "<comment>";
     ans1.id = "ans3-1";
+    ans1.value = "<comment>";
 
     let ans2 = document.createElement("button")
     ans2.textContent = "(comment)";
     ans2.id = "ans3-2";
+    ans2.value = "(comment)"
 
     let ans3 = document.createElement("button")
     ans3.textContent = "//comment";
     ans3.id = "ans3-3";
+    ans3.value = "//comment"
 
     let ans4 = document.createElement("button")
     ans4.textContent = "--comment";
     ans4.id = "ans3-4";
+    ans4.value = "--comment"
+
+    let correctAns = "//comment";
 
     let answers = document.createElement("ol")
     answers.className = "quiz-answers"
@@ -184,16 +215,14 @@ function questionThree() {
 
     
     function evaluate() {
-        if (ans3El) {
-            result3 = true;
+        if (this.value === correctAns) {
+            resultScore = resultScore + 20;
             questionFour();
-             
     }
     else {
-        result3 = false;
         questionFour();
-        
-    } console.log(result3)
+};
+console.log(resultScore);
 };
 };
 
@@ -207,18 +236,25 @@ function questionTwo() {
     let ans1 = document.createElement("button")
     ans1.textContent = "functionName--";
     ans1.id = "ans2-1";
+    ans1.value = "functionName--";
 
     let ans2 = document.createElement("button")
     ans2.textContent = "(functionName)";
     ans2.id = "ans2-2";
+    ans2.value = "(functionName)";
 
     let ans3 = document.createElement("button")
     ans3.textContent = "//functionName";
     ans3.id = "ans2-3";
+    ans3.value = "//functionName";
 
     let ans4 = document.createElement("button")
     ans4.textContent = "functionName()";
     ans4.id = "ans2-4";
+    ans4.value = "functionName()";
+
+    let correctAns = "functionName()";
+
 
     let answers = document.createElement("ol")
     answers.className = "quiz-answers"
@@ -239,15 +275,14 @@ function questionTwo() {
 
     
     function evaluate() {
-        if (ans4El) {
-            result2 = true; 
+        if (this.value === correctAns) {
+            resultScore = resultScore + 20;
             questionThree()
     }
     else {
-        result2 = false;
         questionThree()
     }
-    console.log(result2)
+    console.log(resultScore)
     };
     
 
@@ -265,18 +300,24 @@ function questionOne() {
     let ans1 = document.createElement("button")
     ans1.textContent = "string";
     ans1.id = "answer-one";
+    ans1.value = "string";
 
     let ans2 = document.createElement("button")
     ans2.textContent = "attribute";
     ans2.id = "answer-two";
+    ans2.value = "attribute";
 
     let ans3 = document.createElement("button")
     ans3.textContent = "element";
     ans3.id = "answer-three";
+    ans3.value = "element";
 
     let ans4 = document.createElement("button")
     ans4.textContent = "object";
     ans4.id = "answer-four";
+    ans4.value = "object";
+
+    let correctAns = "string"
 
     let answers = document.createElement("ol")
     answers.className = "quiz-answers"
@@ -290,29 +331,22 @@ function questionOne() {
     let ans3El = document.querySelector("#answer-three")
     let ans4El = document.querySelector("#answer-four")
     
-    ans1El.addEventListener("click", evaluate, {result === true});
-    ans2El.addEventListener("click", evaluate, {result === false});
-    ans3El.addEventListener("click", evaluate, {result === false});
-    ans4El.addEventListener("click", evaluate, {result === false});
+    ans1El.addEventListener("click", evaluate);
+    ans2El.addEventListener("click", evaluate);
+    ans3El.addEventListener("click", evaluate);
+    ans4El.addEventListener("click", evaluate);
 
-    
-    
-
-    // correct = true;
-    // incorrect = false;
-
-    // timeLimit();
-}
-
-function evaluate() {
-        if (result === true) {
+    function evaluate() {
+        if (this.value === correctAns) {
             resultScore = resultScore + 20;
             questionTwo();
         }
         else {
             questionTwo(); 
         }
-        console.log(resultScore)
-};
+    };
+}
 
+
+saveEl.addEventListener("click", saveResult);
 startButtonEl.addEventListener("click", questionOne);
