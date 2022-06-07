@@ -1,36 +1,52 @@
+// GLOBAL VARIABLES
 let startButtonEl = document.querySelector("#start");
 let saveEl = document.querySelector("#save")
 let quizEl = document.querySelector("#content");
+let highScoresEl = document.querySelector("#high-scores")
+let headerEl = document.querySelector("#header")
+let welcomeEl = document.querySelector("#welcome-box")
 let resultScore = 0;
-
-function timeLimit() {
-    let timeLeft = 60;
-    let timerEl = document.createElement("h2");
-    timerEl.className = ("flex-container"); 
-    let timeInterval = setInterval(function () {
-        if (timeLeft >= 60) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else {
-            timerEl.textContent = timeLeft;
-            clearInterval(timeInterval);
-            // displayMessage();
-        }
-    }, 1000)
+let userName = document.querySelector("#name")
+let userInfo = {
+    name: userName,
+    score: resultScore
 }
 
-// document.body.onload = startQuizOne;
-function saveResult () {
-    let userName = document.querySelector("#name")
-    let userInfo = {
-        name: userName,
-        score: resultScore
-    }
+let timeLeft = 60;
+let timerEl = document.createElement("h2");
+timerEl.className = ("flex-container"); 
+headerEl.appendChild(timerEl)
 
+let sorry = document.createElement("p")
+sorry.textContent = "Unfortunately, your time is up. 20 points have been deducted from your score."
+
+// Functions
+// Function to black out the welcome box
+function blackoutWel () {
+    welcomeEl.style.opacity = "10%";
+    welcomeEl.style.userSelect = "none";
+}
+
+// function to save the user's score
+function saveResult () {
     localStorage.setItem('User Info', JSON.stringify(userInfo))
 }
 
-function loadResult () {
+// function to load the user's score when they see the leaderboard
+function loadScores () {
+    let scoreOne = document.querySelector("#score-one")
+    let scoreTwo = document.querySelector("#score-two")
+    let scoreThree = document.querySelector("#score-three")
+    let scoreFour = document.querySelector("#score-four")
+    let scoreFive = document.querySelector("#score-five")
+
+    let user = JSON.parse(localStorage.getItem('User Info'));
+    scoreOne.textContent = (" " + user.name + ", " + user.score + "%")
+
+}
+
+// function to allow user to submit results and finish the quiz
+function saveResult () {
     let subBox = document.createElement("div")
     subBox.className = "quiz-section-two"
 
@@ -42,16 +58,18 @@ function loadResult () {
     quizEl.appendChild(subBox)
 
     let scoreResult = document.querySelector("#score")
-    scoreResult.textContent = (" " + resultScore + ". ")
-  
+    scoreResult.textContent = (" " + resultScore + "%. ")
+   
     $(".sub-btn").on("click", function () {
-      $("#dialog").dialog("open");
+    $("#dialog").dialog("open");
   });
-};
+}
 
+// question five
 function questionFive () {
     let quesBoxFive = document.createElement("div");
     quesBoxFive.className = "quiz-section";
+
 
     let question = document.createElement("h1");
     question.textContent = "Which of the following is not an event?";
@@ -85,6 +103,9 @@ function questionFive () {
     quesBoxFive.append(question, answers);
     quizEl.appendChild(quesBoxFive);
 
+    quesBoxFive.id = "ques-five";
+    document.getElementById("ques-five").focus();
+    
     let ans1El = document.querySelector("#ans5-1")
     let ans2El = document.querySelector("#ans5-2")
     let ans3El = document.querySelector("#ans5-3")
@@ -95,22 +116,48 @@ function questionFive () {
     ans3El.addEventListener("click", evaluate);
     ans4El.addEventListener("click", evaluate);
 
+    function blackout () {
+        quesBoxFive.style.opacity = "10%";
+        quesBoxFive.style.userSelect = "none";
+    }
     
     function evaluate() {
         if (this.value === correctAns) {
             resultScore = resultScore + 20;
-            loadResult()
-    }
-    else {
-        loadResult();   
+            clearInterval(timer);
+            blackout()
+            saveResult()
+        } else {  
+            clearInterval(timer);
+            blackout()
+            saveResult();   
+        };
     };
-    console.log(resultScore);
-};
+
+    let timeLeft = 60;
+    let timer = setInterval(function () {
+        if (timeLeft > 1) {
+            timerEl.textContent = timeLeft;
+            timeLeft --;
+        } else if (timeLeft === 1) {
+            timerEl.textContent = timeLeft;
+            timeLeft --;
+        } else {
+            timerEl.textContent = "--";
+            clearInterval(timer);
+            blackout();
+            saveResult();
+            resultScore = resultScore - 20;
+        }
+    }, 1000);
+
 };
 
+// question four
 function questionFour() {
     let quesBoxFour = document.createElement("div");
     quesBoxFour.className = "quiz-section";
+
 
     let question = document.createElement("h1");
     question.textContent = "How do you assign a class to a newly created element?";
@@ -144,6 +191,9 @@ function questionFour() {
     quesBoxFour.append(question, answers);
     quizEl.appendChild(quesBoxFour);
 
+    quesBoxFour.id = "ques-four";
+    document.getElementById("ques-four").focus();
+
     let ans1El = document.querySelector("#ans4-1")
     let ans2El = document.querySelector("#ans4-2")
     let ans3El = document.querySelector("#ans4-3")
@@ -154,22 +204,46 @@ function questionFour() {
     ans3El.addEventListener("click", evaluate);
     ans4El.addEventListener("click", evaluate);
 
+    function blackout () {
+        quesBoxFour.style.opacity = "10%";
+        quesBoxFour.style.userSelect = "none";
+    }
     
     function evaluate() {
         if (this.value === correctAns) {
             resultScore = resultScore + 20;
+            clearInterval(timer);
+            blackout()
             questionFive();
-    }
-    else {
-        questionFive();
+        } else {
+            clearInterval(timer);
+            blackout()
+            questionFive();
+        };
     };
-    console.log(resultScore);
-};
+    let timeLeft = 60;
+    let timer = setInterval(function () {
+        if (timeLeft > 1) {
+            timerEl.textContent = timeLeft;
+            timeLeft --;
+        } else if (timeLeft === 1) {
+            timerEl.textContent = timeLeft;
+            timeLeft --;
+        } else {
+            timerEl.textContent = "--";
+            clearInterval(timer);
+            blackout();
+            questionFive();
+            resultScore = resultScore - 20;
+        }
+    }, 1000);
 };
 
+// question three
 function questionThree() {
     let quesBoxThree = document.createElement("div");
     quesBoxThree.className = "quiz-section";
+
 
     let question = document.createElement("h1");
     question.textContent = "What is the correct way to comment?";
@@ -203,6 +277,9 @@ function questionThree() {
     quesBoxThree.append(question, answers);
     quizEl.appendChild(quesBoxThree);
 
+    quesBoxThree.id = "ques-three";
+    document.getElementById("ques-three").focus();
+
     let ans1El = document.querySelector("#ans3-1")
     let ans2El = document.querySelector("#ans3-2")
     let ans3El = document.querySelector("#ans3-3")
@@ -213,22 +290,47 @@ function questionThree() {
     ans3El.addEventListener("click", evaluate);
     ans4El.addEventListener("click", evaluate);
 
+    function blackout () {
+        quesBoxThree.style.opacity = "10%";
+        quesBoxThree.style.userSelect = "none";
+    }
     
     function evaluate() {
         if (this.value === correctAns) {
             resultScore = resultScore + 20;
+            clearInterval(timer);
+            blackout()
             questionFour();
-    }
-    else {
-        questionFour();
-};
-console.log(resultScore);
-};
+        } else {
+            clearInterval(timer);
+            blackout()
+            questionFour();
+          };
+    };
+
+    let timeLeft = 60;
+    let timer = setInterval(function () {
+        if (timeLeft > 1) {
+            timerEl.textContent = timeLeft;
+            timeLeft --;
+        } else if (timeLeft === 1) {
+            timerEl.textContent = timeLeft;
+            timeLeft --;
+        } else {
+            timerEl.textContent = "--";
+            clearInterval(timer);
+            blackout();
+            questionFour();
+            resultScore = resultScore - 20;
+        }
+    }, 1000);
 };
 
+// question two
 function questionTwo() {
     let quesBoxTwo = document.createElement("div");
     quesBoxTwo.className = "quiz-section";
+
 
     let question = document.createElement("h1");
     question.textContent = "What is the correct way to call a function?";
@@ -263,6 +365,9 @@ function questionTwo() {
     quesBoxTwo.append(question, answers);
     quizEl.appendChild(quesBoxTwo);
 
+    quesBoxTwo.id = "ques-two";
+    document.getElementById("ques-two").focus();
+
     let ans1El = document.querySelector("#ans2-1")
     let ans2El = document.querySelector("#ans2-2")
     let ans3El = document.querySelector("#ans2-3")
@@ -273,23 +378,45 @@ function questionTwo() {
     ans3El.addEventListener("click", evaluate);
     ans4El.addEventListener("click", evaluate);
 
+    function blackout () {
+        quesBoxTwo.style.opacity = "10%";
+        quesBoxTwo.style.userSelect = "none";
+    }
     
     function evaluate() {
         if (this.value === correctAns) {
             resultScore = resultScore + 20;
+            clearInterval(timer);
+            blackout()
             questionThree()
-    }
-    else {
-        questionThree()
-    }
-    console.log(resultScore)
+        } else {  
+            clearInterval(timer);
+            blackout()
+            questionThree()
+        }
     };
-    
 
-    // correct = true;
-    // incorrect = false;
-}
+    let timeLeft = 60;
+    let timer = setInterval(function () {
 
+        // timeLeft --;
+        if (timeLeft > 1) {
+            timerEl.textContent = timeLeft;
+            timeLeft --;
+        } else if (timeLeft === 1) {
+            timerEl.textContent = timeLeft;
+            timeLeft --;
+        } else {
+            timerEl.textContent = "--";
+            clearInterval(timer);
+            blackout();
+            questionThree();
+            resultScore = resultScore - 20;
+        }
+    }, 1000);
+};
+
+//question one
 function questionOne() {
     let quesBoxOne = document.createElement("div");
     quesBoxOne.className = "quiz-section";
@@ -326,6 +453,9 @@ function questionOne() {
     quesBoxOne.append(question, answers);
     quizEl.appendChild(quesBoxOne);
 
+    quesBoxOne.id = "ques-one";
+    document.getElementById("ques-one").focus();
+
     let ans1El = document.querySelector("#answer-one")
     let ans2El = document.querySelector("#answer-two")
     let ans3El = document.querySelector("#answer-three")
@@ -336,17 +466,45 @@ function questionOne() {
     ans3El.addEventListener("click", evaluate);
     ans4El.addEventListener("click", evaluate);
 
+    function blackout () {
+        quesBoxOne.style.opacity = "10%";
+        quesBoxOne.style.userSelect = "none";
+    }
+
     function evaluate() {
         if (this.value === correctAns) {
             resultScore = resultScore + 20;
+            clearInterval(timer);
+            blackout();
             questionTwo();
         }
         else {
+            clearInterval(timer);
+            blackout();
             questionTwo(); 
         }
     };
-}
 
+    let timer = setInterval(function () {
+        if (timeLeft > 1) {
+            timerEl.textContent = timeLeft;
+            timeLeft --;
+        } else if (timeLeft === 1) {
+            timerEl.textContent = timeLeft;
+            timeLeft --;
+        } else {
+            timerEl.textContent = "--";
+            clearInterval(timer);
+            blackout();
+            questionTwo();
+            resultScore = resultScore - 20;
+        }
+    }, 1000);
 
+    blackoutWel();
+};
+
+// event listeners
+highScoresEl.addEventListener("click", loadScores);
 saveEl.addEventListener("click", saveResult);
 startButtonEl.addEventListener("click", questionOne);
