@@ -1,6 +1,6 @@
-# Java_Quiz
+# Java Quiz
 
-![This is an image preview of the quiz](./assets/images/capture.png)
+![This is an image preview of the quiz](./assets/images/capture.PNG)
 
 ## Purpose
 This is a fast-paced quiz to test a user's knowledge of basic JavaScript concepts. 
