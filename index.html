@@ -12,15 +12,18 @@
     
 </head>
 <body>
+    <!--Header section will include high scores and the timer-->
     <header class="flex-container" id="header">
         <h2 id="scores">High Scores</h2>
     </header>
     <main id="content">
+        <!--Welcome box with start button, timer starts when button is clicked-->
         <div class="quiz-section" id="welcome-box">
             <h1>Welcome to the JavaScript Fundamentals Test</h1>
             <p>This test consists of 5 questions. You will have 60 seconds to answer each question. Each correct answer is worth 20 points. If you run out of time, 20 points will be deducted from your overall score. You must have at least 60 points to pass. Press the START button to begin. Good luck! </p>
             <button id="start">START</button>
         </div>
+        <!--Dialog box to open when quiz is finished-->
         <div class="quiz-section" id="dialog">
             <h1>You're Done!</h1>
             <p>Your score is<span id="score"></span></p>
@@ -28,6 +31,7 @@
             <input id="name" type="text">
             <button id="save">SAVE</button>
         </div>
+        <!--Dialog box to display high scores-->
         <div class="quiz-section" id="high-scores" title="HIGH SCORES">
             <h1>The Leaderboard</h1>
             <ol>
@@ -43,6 +47,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <!--some jQuery script for the dialog boxes-->
     <script>
           $("#dialog").dialog({
       autoOpen: false,

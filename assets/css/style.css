@@ -1,3 +1,4 @@
+/*global styles*/
 :root {
     --primary-color: #3a3a3a;
     --secondary-color: #242424;
@@ -22,6 +23,7 @@ h2 {
     color: aliceblue;
 } 
 
+/*Styles for the header*/
 .flex-container {
     position: sticky;
     top: 0;
@@ -29,6 +31,7 @@ h2 {
     justify-content: space-between;
 }
 
+/*quiz content styles*/
 .quiz-section {
     background-color: var(--secondary-color);
     display:flex;
@@ -70,6 +73,7 @@ h2 {
     box-shadow: 0 0 12px 3px aliceblue;
 }
 
+/*This is for the submit answers section*/
 .quiz-section-two {
     background-color: var(--secondary-color);
     display:flex;
@@ -99,22 +103,7 @@ h2 {
     box-shadow: 0 0 12px 3px aliceblue;
 }
 
-.quiz-section-answered {
-    background-color: var(--secondary-color);
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    color:aliceblue;
-    border: solid 5px black;
-    border-radius: 20px;
-    box-shadow: 0 0 5px black;
-    width: 900px;
-    height: 400px;
-    margin:0 auto 20px auto;
-    opacity: 10%;
-}
-
+/*this is for each of the four answers the user can pick*/
 .quiz-answers {
     display: flex;
     flex-direction: column;
@@ -122,6 +111,7 @@ h2 {
     padding: 0;
 }
 
+/*functionality for the high scores link*/
 #scores {
     color: aliceblue;
 }
@@ -130,6 +120,7 @@ h2 {
     color: black;
 }
 
+/*extra css to spruce up the dialog box*/
 .ui-dialog-titlebar {
     display: flex;
     justify-content: space-between;
