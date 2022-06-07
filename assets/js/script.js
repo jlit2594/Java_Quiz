@@ -2,25 +2,35 @@
 let startButtonEl = document.querySelector("#start");
 let saveEl = document.querySelector("#save")
 let quizEl = document.querySelector("#content");
-let highScoresEl = document.querySelector("#high-scores")
+let highScoresEl = document.querySelector("#scores")
 let headerEl = document.querySelector("#header")
 let welcomeEl = document.querySelector("#welcome-box")
+
 let resultScore = 0;
-let userName = document.querySelector("#name")
-let userInfo = {
-    name: userName,
-    score: resultScore
-}
-
 let timeLeft = 60;
-let timerEl = document.createElement("h2");
-timerEl.className = ("flex-container"); 
-headerEl.appendChild(timerEl)
 
-let sorry = document.createElement("p")
-sorry.textContent = "Unfortunately, your time is up. 20 points have been deducted from your score."
 
 // Functions
+// time limit
+function timeLimit () {
+    let timerEl = document.createElement("h2");
+    timerEl.className = ("flex-container"); 
+    headerEl.appendChild(timerEl)
+    let timer = setInterval(function () {
+        if (timeLeft > 1) {
+            timerEl.textContent = ("Timer: " + timeLeft + " seconds remaining.");
+            timeLeft --;
+        } else if (timeLeft === 1) {
+            timerEl.textContent = ("Timer: " + timeLeft + " second remaining.");
+            timeLeft --;
+        } else {
+            timerEl.textContent = ("Times Up!");
+            clearInterval(timer);
+            submitResult();
+            }
+    }, 1000);
+};
+
 // Function to black out the welcome box
 function blackoutWel () {
     welcomeEl.style.opacity = "10%";
@@ -29,6 +39,12 @@ function blackoutWel () {
 
 // function to save the user's score
 function saveResult () {
+    let userName = document.getElementById("name").value
+    let userInfo = {
+        name: userName,
+        score: resultScore
+    }
+
     localStorage.setItem('User Info', JSON.stringify(userInfo))
 }
 
@@ -40,13 +56,15 @@ function loadScores () {
     let scoreFour = document.querySelector("#score-four")
     let scoreFive = document.querySelector("#score-five")
 
-    let user = JSON.parse(localStorage.getItem('User Info'));
-    scoreOne.textContent = (" " + user.name + ", " + user.score + "%")
+    let jsonString = localStorage.getItem('User Info')
+    let user = JSON.parse(jsonString);
+
+    scoreOne.textContent = (" " + user.name + ", " +  user.score + "%")
 
 }
 
 // function to allow user to submit results and finish the quiz
-function saveResult () {
+function submitResult () {
     let subBox = document.createElement("div")
     subBox.className = "quiz-section-two"
 
@@ -124,33 +142,14 @@ function questionFive () {
     function evaluate() {
         if (this.value === correctAns) {
             resultScore = resultScore + 20;
-            clearInterval(timer);
             blackout()
-            saveResult()
+            submitResult()
         } else {  
-            clearInterval(timer);
+            timeLeft = timeLeft - 20;
             blackout()
-            saveResult();   
+            submitResult();   
         };
     };
-
-    let timeLeft = 60;
-    let timer = setInterval(function () {
-        if (timeLeft > 1) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else if (timeLeft === 1) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else {
-            timerEl.textContent = "--";
-            clearInterval(timer);
-            blackout();
-            saveResult();
-            resultScore = resultScore - 20;
-        }
-    }, 1000);
-
 };
 
 // question four
@@ -212,31 +211,14 @@ function questionFour() {
     function evaluate() {
         if (this.value === correctAns) {
             resultScore = resultScore + 20;
-            clearInterval(timer);
             blackout()
             questionFive();
         } else {
-            clearInterval(timer);
+            timeLeft = timeLeft - 20;
             blackout()
             questionFive();
         };
     };
-    let timeLeft = 60;
-    let timer = setInterval(function () {
-        if (timeLeft > 1) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else if (timeLeft === 1) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else {
-            timerEl.textContent = "--";
-            clearInterval(timer);
-            blackout();
-            questionFive();
-            resultScore = resultScore - 20;
-        }
-    }, 1000);
 };
 
 // question three
@@ -298,39 +280,20 @@ function questionThree() {
     function evaluate() {
         if (this.value === correctAns) {
             resultScore = resultScore + 20;
-            clearInterval(timer);
             blackout()
             questionFour();
         } else {
-            clearInterval(timer);
+            timeLeft = timeLeft - 20;
             blackout()
             questionFour();
           };
     };
-
-    let timeLeft = 60;
-    let timer = setInterval(function () {
-        if (timeLeft > 1) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else if (timeLeft === 1) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else {
-            timerEl.textContent = "--";
-            clearInterval(timer);
-            blackout();
-            questionFour();
-            resultScore = resultScore - 20;
-        }
-    }, 1000);
 };
 
 // question two
 function questionTwo() {
     let quesBoxTwo = document.createElement("div");
     quesBoxTwo.className = "quiz-section";
-
 
     let question = document.createElement("h1");
     question.textContent = "What is the correct way to call a function?";
@@ -386,34 +349,14 @@ function questionTwo() {
     function evaluate() {
         if (this.value === correctAns) {
             resultScore = resultScore + 20;
-            clearInterval(timer);
             blackout()
             questionThree()
         } else {  
-            clearInterval(timer);
+            timeLeft = timeLeft - 20;
             blackout()
             questionThree()
         }
     };
-
-    let timeLeft = 60;
-    let timer = setInterval(function () {
-
-        // timeLeft --;
-        if (timeLeft > 1) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else if (timeLeft === 1) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else {
-            timerEl.textContent = "--";
-            clearInterval(timer);
-            blackout();
-            questionThree();
-            resultScore = resultScore - 20;
-        }
-    }, 1000);
 };
 
 //question one
@@ -474,34 +417,18 @@ function questionOne() {
     function evaluate() {
         if (this.value === correctAns) {
             resultScore = resultScore + 20;
-            clearInterval(timer);
             blackout();
             questionTwo();
         }
         else {
-            clearInterval(timer);
+            timeLeft = timeLeft - 20;
             blackout();
             questionTwo(); 
         }
     };
 
-    let timer = setInterval(function () {
-        if (timeLeft > 1) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else if (timeLeft === 1) {
-            timerEl.textContent = timeLeft;
-            timeLeft --;
-        } else {
-            timerEl.textContent = "--";
-            clearInterval(timer);
-            blackout();
-            questionTwo();
-            resultScore = resultScore - 20;
-        }
-    }, 1000);
-
     blackoutWel();
+    timeLimit();
 };
 
 // event listeners
